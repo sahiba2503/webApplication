@@ -43,3 +43,23 @@ body{
   .navContainer ul li:hover{
     background-color: red;
   }
+  .todolistcontainer{
+    list-style: none;
+  }
+  .taskItemContainer{
+    border: 1px solid black;
+    width: 90%;
+    list-style: none;
+    padding: 0.5rem 1rem;
+    margin-bottom: 1rem;
+  }
+  .tasklistItem{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .todosTaskListContainer{
+    height: 90vh;
+    overflow: auto;
+  }
