@@ -3,6 +3,7 @@ import { useEffect,useState } from "react";
 
 function Todo() {
    const[tasks,setTasks] = useState([]);
+
     useEffect(()=>{
      fetch("http://localhost:5000/gettodo")
      .then((response)=>{
@@ -12,6 +13,21 @@ function Todo() {
       setTasks(data);
      })
     },[]);
+    function deletedTask(id){
+    fetch("http://localhost:5000/deletetodo",{
+      method:"DElETE",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body:JSON.stringify({key:id})
+    })
+    .then((response)=>{
+      return response.json();
+    })
+    .then((data)=>{
+      setTasks(data);
+    })
+    }
     
   return (
     <div className="todosTaskListContainer">
@@ -23,9 +39,10 @@ function Todo() {
              <p>{item.description}</p>
             </div>
             <div>
-              <button >update</button>
-              <button >completed</button>
-              <button>delete</button>
+              <button>update</button>
+              <button>completed</button>
+              <button onClick={()=>deletedTask(item.id)}>delete</button>
+               {/* <button onClick={deletedTask(item.id)}>delete</button> wrong way*/}
               </div>          
             </li>
          

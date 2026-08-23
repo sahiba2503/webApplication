@@ -8,11 +8,11 @@ app.use(cors());
 
 let todos=[
     {
+         id:1,
         name:"Task name",
-        id:1,
         description:"example"
-    }
-]
+    },
+];
 
 app.get("/gettodo",(req,res)=>{
       res.json(todos);
@@ -20,13 +20,24 @@ app.get("/gettodo",(req,res)=>{
 
 app.post("/posttodo",(req,res)=>{
     let task={
+         id:todos.length + 1,
         name:req.body.name,
-        id:todos.length + 1,
         description:req.body.description
             }
             todos.push(task);
             res.json(todos);
 });
+app.delete("/deletetodo",(req,res)=>{
+    todos = todos.filter((item)=>{
+               if(item.id !== Number(req.body.key))
+                {
+                return item;
+               }
+    });
+    
+    res.json(todos);
+
+})
 
 
 

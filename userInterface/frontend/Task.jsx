@@ -19,13 +19,13 @@ function Task() {
     })
   },[]);
 
-  function newTaskCreated(){
-   
+  function newTaskCreated(e){
+     e.preventDefault();
    
    fetch("http://localhost:5000/posttodo",{
      method:"POST",
      headers:{
-       "Content-type":"Application/json"
+       "Content-type":"application/json"
      },
      body:JSON.stringify({name:todoName,description:todoDes})    
   })
