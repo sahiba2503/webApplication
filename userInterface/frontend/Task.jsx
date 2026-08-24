@@ -43,7 +43,7 @@ navigate("/todo");
   }
   
   return (
-    <div>
+    <div className="taskCreateContainer">
       <form onSubmit={newTaskCreated}>
     <input type="text"  placeholder="Enter a task name" value={todoName} onChange={(e)=>setTodoName(e.target.value)}/>
     <input type="text" placeholder="Enter a task description" value={todoDes} onChange={(e)=>setTodoDes(e.target.value)}/>

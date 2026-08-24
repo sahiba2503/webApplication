@@ -63,3 +63,22 @@ body{
     height: 90vh;
     overflow: auto;
   }
+  .taskCreateContainer{
+    /* border: 1px solid black; */
+    margin:0 10%;
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+  }
+  .taskCreateContainer input,button{
+    width: 99%;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+  }
+  .taskCreateContainer button{
+    background-color: black;
+    color:white;
+  }
+  .taskCreateContainer button:hover{
+    background-color: red;
+  } 
