@@ -42,7 +42,7 @@ function Todo() {
               <button>update</button>
               <button>completed</button>
               <button onClick={()=>deletedTask(item.id)}>delete</button>
-               {/* <button onClick={deletedTask(item.id)}>delete</button> wrong way*/}
+               
               </div>          
             </li>
          

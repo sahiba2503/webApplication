@@ -21,6 +21,9 @@ function Task() {
 
   function newTaskCreated(e){
      e.preventDefault();
+     if(todoName.trim === "" || description.trim === ""){
+        return;
+     }
    
    fetch("http://localhost:5000/posttodo",{
      method:"POST",
@@ -41,6 +44,8 @@ function Task() {
   setTodoDes("");
 navigate("/todo");
   }
+
+ 
   
   return (
     <div className="taskCreateContainer">
