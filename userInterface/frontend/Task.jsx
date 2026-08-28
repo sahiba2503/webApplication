@@ -1,60 +1,82 @@
-import { useEffect, useState } from "react"
-
+import { useEffect} from "react"
 import { useNavigate } from "react-router-dom";
-function Task() {
-  const[todos,setTodos] = useState([]);
-  const [todoName,setTodoName] = useState("");
-  const [todoDes,setTodoDes] = useState("");
+
+function Task(props) {
  
   let navigate = useNavigate();
+
     useEffect(()=>{
  fetch("http://localhost:5000/gettodo")
     .then((response)=>{
       return response.json();
     })
     .then((data)=>{
-      console.log(data);
-      setTodos(data);
+       props.setTodos(data);
 
-    })
+    });
   },[]);
 
-  function newTaskCreated(e){
+  function taskSubmit(e){
      e.preventDefault();
-     if(todoName.trim === "" || description.trim === ""){
+     if(props.todoName.trim() === "" || props.todoDes.trim() === ""){
         return;
      }
-   
-   fetch("http://localhost:5000/posttodo",{
+     if(props.editId !== null){
+fetch("http://localhost:5000/updatetodo", {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          key: props.editId,
+          name: props.todoName,
+          description: props.todoDes
+        })
+      })
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+
+          props.setTodos(data);
+
+          props.setTodoName("");
+          props.setTodoDes("");
+          props.setEditId(null);
+
+          navigate("/todo");
+        });
+
+    } 
+    else{
+fetch("http://localhost:5000/posttodo",{
      method:"POST",
      headers:{
        "Content-type":"application/json"
      },
-     body:JSON.stringify({name:todoName,description:todoDes})    
+     body:JSON.stringify({name:props.todoName,description:props.todoDes})    
   })
    .then((response)=>{
       return response.json();
   })
    .then((data)=>{
     console.log(data);
-    setTodos(data);
-})
- 
-  setTodoName("");
-  setTodoDes("");
+    props.setTodos(data);
+      props.setTodoName("");
+  props.setTodoDes("");
 navigate("/todo");
-  }
-
+});
  
-  
+  }
+    }
+    
   return (
     <div className="taskCreateContainer">
-      <form onSubmit={newTaskCreated}>
-    <input type="text"  placeholder="Enter a task name" value={todoName} onChange={(e)=>setTodoName(e.target.value)}/>
-    <input type="text" placeholder="Enter a task description" value={todoDes} onChange={(e)=>setTodoDes(e.target.value)}/>
-    <button type="submit" >create</button>
+      <form onSubmit={taskSubmit}>
+    <input type="text"  placeholder="Enter a task name" value={props.todoName} onChange={(e)=>props.setTodoName(e.target.value)}/>
+    <input type="text" placeholder="Enter a task description" value={props.todoDes} onChange={(e)=>props.setTodoDes(e.target.value)}/>
+    <button type="submit" >{props.editId !== null ? "Update" : "Create"}</button>
 </form>    
-
     </div>
   )
 }

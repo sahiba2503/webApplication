@@ -38,6 +38,20 @@ app.delete("/deletetodo",(req,res)=>{
     res.json(todos);
 
 })
+//
+app.patch("/updatetodo", (req, res) => {
+
+  const id = Number(req.body.key);
+
+  const task = todos.find((item) => item.id === id);
+
+  if (task) {
+    task.name = req.body.name;
+    task.description = req.body.description;
+  }
+
+  res.json(todos);
+});
 
 
 

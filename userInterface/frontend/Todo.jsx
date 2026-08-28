@@ -1,21 +1,29 @@
-import { useEffect,useState } from "react";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
-
-function Todo() {
-   const[tasks,setTasks] = useState([]);
-
+function Todo(props) {
+   const navigate = useNavigate();
+  
     useEffect(()=>{
      fetch("http://localhost:5000/gettodo")
      .then((response)=>{
       return response.json();
      })
      .then((data)=>{
-      setTasks(data);
-     })
+      props.setTodos(data);
+     });
     },[]);
+
+     function updateTask(item) {
+    props.setTodoName(item.name);
+    props.setTodoDes(item.description);
+    props.setEditId(item.id);
+    navigate("/task");
+  }
+
     function deletedTask(id){
     fetch("http://localhost:5000/deletetodo",{
-      method:"DElETE",
+      method:"DELETE",
       headers:{
         "Content-Type":"application/json"
       },
@@ -25,21 +33,25 @@ function Todo() {
       return response.json();
     })
     .then((data)=>{
-      setTasks(data);
+      props.setTodos(data);
     })
     }
     
   return (
     <div className="todosTaskListContainer">
-       <ul>{tasks.map((item)=>{
-        return <div className="taskItemContainer" key={item.id}>
+       <ul>
+        {props.todos.map((item)=>{
+        return <div
+         className="taskItemContainer"
+          key={item.id}
+          >
           <li className="tasklistItem">
             <div>
              <h3>{item.name}</h3>
              <p>{item.description}</p>
             </div>
             <div>
-              <button>update</button>
+              <button onClick={() => updateTask(item)}>update</button>
               <button>completed</button>
               <button onClick={()=>deletedTask(item.id)}>delete</button>
                

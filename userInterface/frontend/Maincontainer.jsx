@@ -1,20 +1,51 @@
+import Task from "./Task";
+import Todo from "./Todo";
+import Completed from "./Completed";
+import { Routes, Route, Navigate } from "react-router-dom";
+import { useState } from "react";
 
-import Task from "./Task"
-import Todo from "./Todo"
-import Completed from "./Completed"
-import { Routes,Route, Navigate } from "react-router-dom"
 function Maincontainer() {
+  const [todos, setTodos] = useState([]);
+  const [todoName, setTodoName] = useState("");
+  const [todoDes, setTodoDes] = useState("");
+
+  const [editId, setEditId] = useState(null);
   return (
-    <div className="mainContainer">
-     <Routes>
-        <Route path="/task" element={<Task/>}></Route>
-        <Route index element={<Navigate  to ="/task"/>} ></Route>
-        <Route path="/todo" element={<Todo/>}></Route>
-        <Route path="/completed" element={<Completed/>}></Route>
-         <Route path="/*" element={<Navigate  to ="/task"/>} ></Route>
-     </Routes>
+    <div className='mainContainer'>
+      <Routes>
+        <Route
+          path='/task'
+          element={
+            <Task
+              setTodos={setTodos}
+              setTodoName={setTodoName}
+              setTodoDes={setTodoDes}
+              todos={todos}
+              todoName={todoName}
+              todoDes={todoDes}
+              editId={editId}
+              setEditId={setEditId}
+            />
+          }
+        ></Route>
+        <Route index element={<Navigate to='/task' />}></Route>
+        <Route
+          path='/todo'
+          element={
+            <Todo
+              setTodos={setTodos}
+              todos={todos}
+              setTodoName={setTodoName}
+              setTodoDes={setTodoDes}
+              setEditId={setEditId}
+            />
+          }
+        ></Route>
+        <Route path='/completed' element={<Completed />}></Route>
+        <Route path='/*' element={<Navigate to='/task' />}></Route>
+      </Routes>
     </div>
-  )
+  );
 }
 
-export default Maincontainer
+export default Maincontainer;
