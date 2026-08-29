@@ -23,10 +23,10 @@ function Todo(props) {
   function completedTask(item){
    fetch("http://localhost:5000/taskCompleted",{
     method:"PATCH",
-    header:{
+    headers:{
       "Content-Type":"application/json",
           },
-          body:Json.stringify({key:item.id}),
+          body:JSON.stringify({key:item.id}),
    })
    .then((response)=>{
     return response.json();

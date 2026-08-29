@@ -13,7 +13,10 @@ function Completed(props) {
   return (
     <div>
     {props.todos.map((item)=>{
-      return<li>{item}</li>
+      if(item.isCompleted === "yes"){
+             return <li key={item.id}>{item.name}</li>;
+      }
+        
     })}
     </div>
   )
