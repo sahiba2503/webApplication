@@ -10,7 +10,8 @@ let todos=[
     {
          id:1,
         name:"Task name",
-        description:"example"
+        description:"example",
+        isCompleted:"not",
     },
 ];
 
@@ -27,6 +28,22 @@ app.post("/posttodo",(req,res)=>{
             todos.push(task);
             res.json(todos);
 });
+app.post("/taskCompleted",(req,res)=>{
+    let id = Number(req.body.key);
+     todos = todos.map((item)=>{
+        if(item.id === id){
+            return {...item, isCompleted:"yes"};
+        }
+        else{
+            return item;
+        }
+    });
+    res.json(todos);
+});
+
+
+
+
 app.delete("/deletetodo",(req,res)=>{
     todos = todos.filter((item)=>{
                if(item.id !== Number(req.body.key))

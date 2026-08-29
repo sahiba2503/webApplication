@@ -20,6 +20,21 @@ function Todo(props) {
     props.setEditId(item.id);
     navigate("/task");
   }
+  function completedTask(item){
+   fetch("http://localhost:5000/taskCompleted",{
+    method:"PATCH",
+    header:{
+      "Content-Type":"application/json",
+          },
+          body:Json.stringify({key:item.id}),
+   })
+   .then((response)=>{
+    return response.json();
+   })
+   .then((data)=>{
+    props.setTodos(data);
+   });
+  }
 
   function deletedTask(id) {
     fetch("http://localhost:5000/deletetodo", {
@@ -41,7 +56,8 @@ function Todo(props) {
     <div className='todosTaskListContainer'>
       <ul>
         {props.todos.map((item) => {
-          return (
+          if(item.isCompleted === "not"){
+             return (
             <div className='taskItemContainer' key={item.id}>
               <li className='tasklistItem'>
                 <div>
@@ -50,12 +66,14 @@ function Todo(props) {
                 </div>
                 <div>
                   <button onClick={() => updateTask(item)}>update</button>
-                  <button>completed</button>
+                  <button onClick={() => completedTask(item)}>completed</button>
                   <button onClick={() => deletedTask(item.id)}>delete</button>
                 </div>
               </li>
             </div>
           );
+          }
+         
         })}
       </ul>
     </div>

@@ -52,6 +52,7 @@ function Task(props) {
         body: JSON.stringify({
           name: props.todoName,
           description: props.todoDes,
+          isCompleted:"not",
         }),
       })
         .then((response) => {

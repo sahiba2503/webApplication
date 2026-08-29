@@ -41,7 +41,8 @@ function Maincontainer() {
             />
           }
         ></Route>
-        <Route path='/completed' element={<Completed />}></Route>
+        <Route path='/completed' element={<Completed  setTodos={setTodos}
+              todos={todos} />}></Route>
         <Route path='/*' element={<Navigate to='/task' />}></Route>
       </Routes>
     </div>
