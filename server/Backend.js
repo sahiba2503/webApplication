@@ -23,12 +23,13 @@ app.post("/posttodo",(req,res)=>{
     let task={
          id:todos.length + 1,
         name:req.body.name,
-        description:req.body.description
+        description:req.body.description,
+        isCompleted:req.body.isCompleted,
             }
             todos.push(task);
             res.json(todos);
 });
-app.post("/taskCompleted",(req,res)=>{
+app.patch("/taskCompleted",(req,res)=>{
     let id = Number(req.body.key);
      todos = todos.map((item)=>{
         if(item.id === id){
